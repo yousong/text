@@ -66,10 +66,10 @@ type Command struct {
 	// The first word in the line is taken to be the command name.
 	UsageLine string
 
-	// Short is the short description shown in the 'go help' output.
+	// Short is the short description shown in the 'gotext help' output.
 	Short string
 
-	// Long is the long message shown in the 'go help <this-command>' output.
+	// Long is the long message shown in the 'gotext help <this-command>' output.
 	Long string
 
 	// Flag is a set of flags specific to this command.
@@ -284,17 +284,17 @@ func usage() {
 func help(args []string) {
 	if len(args) == 0 {
 		printUsage(os.Stdout)
-		// not exit 2: succeeded at 'go help'.
+		// not exit 2: succeeded at 'gotext help'.
 		return
 	}
 	if len(args) != 1 {
-		fmt.Fprintf(os.Stderr, "usage: go help command\n\nToo many arguments given.\n")
-		os.Exit(2) // failed at 'go help'
+		fmt.Fprintf(os.Stderr, "usage: gotext help command\n\nToo many arguments given.\n")
+		os.Exit(2) // failed at 'gotext help'
 	}
 
 	arg := args[0]
 
-	// 'go help documentation' generates doc.go.
+	// 'gotext help documentation' generates doc.go.
 	if strings.HasSuffix(arg, "documentation") {
 		w := &bytes.Buffer{}
 
@@ -322,13 +322,13 @@ func help(args []string) {
 	for _, cmd := range commands {
 		if cmd.Name() == arg {
 			tmpl(os.Stdout, helpTemplate, cmd)
-			// not exit 2: succeeded at 'go help cmd'.
+			// not exit 2: succeeded at 'gotext help cmd'.
 			return
 		}
 	}
 
 	fmt.Fprintf(os.Stderr, "Unknown help topic %#q.  Run 'gotext help'.\n", arg)
-	os.Exit(2) // failed at 'go help cmd'
+	os.Exit(2) // failed at 'gotext help cmd'
 }
 
 func getLangs() (tags []language.Tag) {
