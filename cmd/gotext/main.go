@@ -166,18 +166,20 @@ Usage:
 
 	gotext command [arguments]
 
+{{ $hasNonRunnable := false -}}
 The commands are:
 {{range .}}{{if .Runnable}}
-	{{.Name | printf "%-11s"}} {{.Short}}{{end}}{{end}}
+	{{.Name | printf "%-11s"}} {{.Short}}{{else}}{{ $hasNonRunnable = true }}{{end}}{{end}}
 
 Use "gotext help [command]" for more information about a command.
+{{- if $hasNonRunnable }}
 
 Additional help topics:
 {{range .}}{{if not .Runnable}}
 	{{.Name | printf "%-11s"}} {{.Short}}{{end}}{{end}}
 
 Use "gotext help [topic]" for more information about that topic.
-
+{{- end}}
 `
 
 var helpTemplate = `{{if .Runnable}}usage: gotext {{.UsageLine}}
