@@ -37,7 +37,7 @@ const debug = false
 
 // - `msg:"etc"` tags
 
-// Extract extracts all strings form the package defined in Config.
+// Extract extracts all strings from the package defined in Config.
 func Extract(c *Config) (*State, error) {
 	x, err := newExtracter(c)
 	if err != nil {
