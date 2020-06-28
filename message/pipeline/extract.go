@@ -461,7 +461,7 @@ func (x *extracter) visitArgs(fd *callData, v ssa.Value) {
 		}
 
 	case *ssa.Alloc:
-		if ref := v.Referrers(); ref == nil {
+		if ref := v.Referrers(); ref != nil {
 			for _, r := range *ref {
 				values := []ssa.Value{}
 				for _, o := range r.Operands(nil) {
