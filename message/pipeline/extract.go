@@ -334,9 +334,7 @@ func (x *extracter) visitInit(global *ssa.Global, v ssa.Value) {
 	return
 }
 
-// visitFormats finds the original source of the value. The returned index is
-// position of the argument if originated from a function argument or -1
-// otherwise.
+// visitFormats finds the original source of the value.
 func (x *extracter) visitFormats(call *callData, v ssa.Value) {
 	if v == nil {
 		return
