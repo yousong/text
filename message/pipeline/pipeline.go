@@ -124,9 +124,6 @@ type Config struct {
 type State struct {
 	Config Config
 
-	Package string
-	program *loader.Program
-
 	Extracted Messages `json:"messages"`
 
 	// Messages includes all messages for which there need to be translations.

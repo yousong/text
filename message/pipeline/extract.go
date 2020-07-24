@@ -50,8 +50,7 @@ func Extract(c *Config) (*State, error) {
 	x.extractMessages()
 
 	return &State{
-		Config:  *c,
-		program: x.iprog,
+		Config: *c,
 		Extracted: Messages{
 			Language: c.SourceLanguage,
 			Messages: x.messages,
