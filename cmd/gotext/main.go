@@ -50,6 +50,7 @@ func config() (*pipeline.Config, error) {
 		Supported:           getLangs(),
 		TranslationsPattern: `messages\.(.*)\.json`,
 		GenFile:             *out,
+		SetDefault:          true,
 	}, nil
 }
 

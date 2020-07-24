@@ -134,11 +134,15 @@ func (s *State) generate() (*gen.CodeWriter, error) {
 	cw := gen.NewCodeWriter()
 
 	x := &struct {
-		Fallback  language.Tag
-		Languages []string
+		Fallback   language.Tag
+		Languages  []string
+		DeclareVar string
+		SetDefault bool
 	}{
-		Fallback:  s.Extracted.Language,
-		Languages: langVars,
+		Fallback:   s.Extracted.Language,
+		Languages:  langVars,
+		DeclareVar: s.Config.DeclareVar,
+		SetDefault: s.Config.SetDefault,
 	}
 
 	if err := lookup.Execute(cw, x); err != nil {
@@ -287,7 +291,9 @@ var cmpNumeric = collate.New(language.Und, collate.Numeric).CompareString
 var lookup = template.Must(template.New("gen").Parse(`
 import (
 	"golang.org/x/text/language"
+{{if .SetDefault}}
 	"golang.org/x/text/message"
+{{end}}
 	"golang.org/x/text/message/catalog"
 )
 
@@ -308,6 +314,10 @@ func (d *dictionary) Lookup(key string) (data string, ok bool) {
 	return d.data[start:end], true
 }
 
+{{if .DeclareVar}}
+var {{.DeclareVar}} catalog.Catalog
+{{end}}
+
 func init() {
 	dict := map[string]catalog.Dictionary{
 		{{range .Languages}}"{{.}}": &dictionary{index: {{.}}Index, data: {{.}}Data },
@@ -318,7 +328,12 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+{{if .DeclareVar}}
+	{{.DeclareVar}} = cat
+{{end}}
+{{if .SetDefault}}
 	message.DefaultCatalog = cat
+{{end}}
 }
 
 `))
