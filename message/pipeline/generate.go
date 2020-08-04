@@ -125,8 +125,6 @@ func (s *State) generate() (*gen.CodeWriter, error) {
 					}
 					break
 				}
-				// TODO: log missing entry.
-				warnf("%s: Missing entry for %q.", tag, id)
 			}
 		}
 	}
