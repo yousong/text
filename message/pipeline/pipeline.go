@@ -355,6 +355,7 @@ func (s *State) Export() error {
 		if err := os.MkdirAll(filepath.Dir(file), 0755); err != nil {
 			return wrap(err, "dir create failed")
 		}
+		data = append(data, '\n')
 		if err := ioutil.WriteFile(file, data, 0644); err != nil {
 			return wrap(err, "write failed")
 		}
